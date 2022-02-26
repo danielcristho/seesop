@@ -225,6 +225,7 @@ rm -r $nama_folder
 
 
 ## Nomor 2
+### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal2)
 ### Deskripsi soal:
 
 Pada tanggal 22 Januari 2022, website https://daffa.info di hack oleh seseorang yang tidak
