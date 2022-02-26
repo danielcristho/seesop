@@ -1,6 +1,6 @@
 # soal-shift-sisop-modul-1-B13-2022
 ## Nomor 1
-### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal1)
+### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal1)
 
 ### Deskripsi soal:
 Pada suatu hari, Han dan teman-temannya diberikan tugas untuk mencari foto. Namun,
@@ -224,12 +224,75 @@ rm -r $nama_folder
 - Remove folder $nama_folder
 
 
+## Nomor 2
+### Deskripsi soal:
 
+Pada tanggal 22 Januari 2022, website https://daffa.info di hack oleh seseorang yang tidak
+bertanggung jawab. Sehingga hari sabtu yang seharusnya hari libur menjadi berantakan.
+Dapos langsung membuka log website dan menemukan banyak request yang berbahaya.
+Bantulah Dapos untuk membaca log website https://daffa.info Buatlah sebuah script awk
+bernama "soal2_forensic_dapos.sh" untuk melaksanakan tugas-tugas berikut:
 
+### soal2_forensic_dapos.sh:
+#### A. Membuat directory dengan nama forensic_log_website_daffainfo_log
 
+```yml
+folder=forensic_log_website_daffainfo_log
+```
+- Membuat variable folder untuk mempermudah
 
+```yml
+if [ -d "$folder" ]
+```
+- Melakukan pengeceken apakah folder tersebut sudah ada
 
+```yml
+then
+  rm -rf "$folder"
+  mkdir "$folder"
+else
+  mkdir "$folder"
+fi
 
+```
+- Apabila sudah ada maka folder akan dihapus dan dibuat folder baru dengan nama yang sama
+- Apabila belum maka akan dibuat folder baru
+
+#### B. Mencari tahu rata-rata request perjam yang dilakukan penyerang
+
+```yml
+cat log_website_daffainfo.log | awk -F: 'NR>=2{count[$3]++} END {for (c in count){res++} printf "rata-rata serangan adalah sebanyak %f request per jam", (NR-1)/res}' | uniq > $folder/ratarata.txt
+```
+- `cat log_website_daffainfo.log` digunakan untuk menyalin isi dari log
+- Mencari tahu pada jam berapa saja penyerangan dilakukan dan menghitung berapa lama
+- `(NR-1)/res` digunakan untuk melakukan perhitungan rata-rata
+- `> $folder/ratarata.txt` digunakan untuk memasukkan hasil ke dalam file rata-rata.txt 
+
+#### C. Mencari tahu IP yang paling banyak melakukan request dan berapa jumlah request yang dilakukan
+
+```yml
+cat log_website_daffainfo.log | awk -F: 'NR>=2{print $1}' | cut -d\" -f2 | sort | uniq -c | sort -rn | awk 'NR==1 {printf "IP yang paling banyak mengakses server adalah: %s sebanyak %s request\n\n", $2, $1}' > $folder/result.txt
+```
+- Melakukan sorting IP yang melakukan request dengan urutan dari yang paling banyak `awk -F: 'NR>=2{print $1}' | cut -d\" -f2 | sort | uniq -c | sort -rn`
+- Melakukan selection dan mencetak hasil dengan `awk 'NR==1 {printf "IP yang paling banyak mengakses server adalah: %s sebanyak %s request\n\n", $2, $1}'`
+- Memasukkan hasil ke dalam file result.txt
+
+#### D. Mencari tahu seberapa banyak request yang menggunakan user-agent "curl"
+
+```yml
+cat log_website_daffainfo.log | awk '/curl/ {++n} END {printf "Ada %d request yang menggunakan curl sebagai user-agent\n\n", n}' >> $folder/result.txt
+```
+- Menghitung seberapa banyak "curl" muncul dalam log dengan `awk '/curl/ {++n} `
+- Mencetak dan menambahkan hasil ke dalam file result.txt `END {printf "Ada %d request yang menggunakan curl sebagai user-agent\n\n", n}' >> $folder/result.txt`
+
+#### E. Mencari tahu IP address yang melakukan request pada tanggal 22 dan pada jam 02
+
+```yml
+cat log_website_daffainfo.log | awk -F: '{if($2 ~ /22\// && $3 ~ /02/) {print $1}}' | sort | uniq | cut -d\" -f2 >> $folder/result.txt
+```
+- Melakukan pengecekan apabila ada request pada tanggal 22 dan jam 02 `if($2 ~ /22\// && $3 ~ /02/`
+- Mencetak IP address unique (tidak ada yang sama) yang sesuai dengan kondisi diatas secara berurutan `{print $1}}' | sort | uniq | cut -d\" -f2`
+- Mencetak dan menambahkan hasil ke dalam file result.txt
 
 ## Anggota Kelompok
 | Nama                      | NRP      |
