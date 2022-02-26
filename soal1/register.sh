@@ -63,5 +63,3 @@ input_password () {
 
 input_username
 input_password
-
-

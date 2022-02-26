@@ -1,4 +1,4 @@
-#1/bin/bash
+#!/bin/bash
 
 input_login () {
   echo -n "Enter username: "
@@ -76,7 +76,3 @@ download_files () {
 
 input_login
 insert_command
-
-
-
-
