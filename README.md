@@ -225,7 +225,7 @@ rm -r $nama_folder
 
 
 ## Nomor 2
-### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal2)
+### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal2)
 ### Deskripsi soal:
 
 Pada tanggal 22 Januari 2022, website https://daffa.info di hack oleh seseorang yang tidak
@@ -294,6 +294,35 @@ cat log_website_daffainfo.log | awk -F: '{if($2 ~ /22\// && $3 ~ /02/) {print $1
 - Melakukan pengecekan apabila ada request pada tanggal 22 dan jam 02 `if($2 ~ /22\// && $3 ~ /02/`
 - Mencetak IP address unique (tidak ada yang sama) yang sesuai dengan kondisi diatas secara berurutan `{print $1}}' | sort | uniq | cut -d\" -f2`
 - Mencetak dan menambahkan hasil ke dalam file result.txt
+
+## Nomor 3
+### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal3)
+### Deskripsi soal:
+
+Buatlah program monitoring resource pada komputer kalian. Cukup monitoring ram dan monitoring size suatu directory. Untuk ram gunakan command `free -m`. Untuk disk gunakan command `du -sh <target_path>`. Catat semua metrics yang didapatkan dari hasil `free -m`. Untuk hasil `du -sh <target_path>` catat size dari path directory tersebut. Untuk target_path yang akan dimonitor adalah /home/{user}/.
+
+### A 
+
+Di poin ini, kami diminta untuk membuat sebuah log file dengan format metrics_{YmdHms}.log. Berikut syntax yang digunakan: 
+
+    OUTPUTPATH="log/metrics$(date +"%Y%m%d%H%M%S").log" 
+    if [ ! -d "log" ]; then mkdir log
+    fi
+
+Fungsi if berfungsi untuk membuat directory baru berupa file log jika belum ada.
+
+Lalu untuk program monitoring resourcenya:
+
+    echo \ "mem_total,mem_used,mem_free,mem_shared,mem_buff,mem_available,swap_total,swap_used,swap_free,path,path_size" \ 
+    >$Output 
+
+    MEMORY="$(free | awk '/Mem:/ {print $2","$3","$4","$5","$6","$7}')"
+    SWAP="$(free | awk '/Swap:/ {printf $2","$3","$4}')"
+    STORAGE="$(du -sh ~ /home/{user}/ | awk '{printf $2","$1}')"
+
+    echo "$MEMORY,$SWAP,$STORAGE" >> $Output
+
+Dimana echo untuk print out keterangan-keterangannya. Lalu di dalam MEMORY, SWAP, dan STORAGE menggunakan metode awk untuk mendapatkan data dari beberapa variabel di memory dan storage (command free untuk melihat isi ram dan du -sh untuk melihat isi storage.) dan echo terakhir untuk print hasil dari scan awk tersebut. Jangan lupa untuk mengganti /home/{user}/ menjadi user sendiri.
 
 ## Anggota Kelompok
 | Nama                      | NRP      |
