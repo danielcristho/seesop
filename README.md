@@ -1,6 +1,6 @@
 # soal-shift-sisop-modul-1-B13-2022
 ## Nomor 1
-### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal1)
+### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal1)
 
 ### Deskripsi soal:
 Pada suatu hari, Han dan teman-temannya diberikan tugas untuk mencari foto. Namun,
@@ -225,7 +225,7 @@ rm -r $nama_folder
 
 
 ## Nomor 2
-### source code: [click here!](https://github.com/danielcristho/seesop/blob/master/soal2/soal2_forensic_dapos.sh)
+### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal2)
 ### Deskripsi soal:
 
 Pada tanggal 22 Januari 2022, website https://daffa.info di hack oleh seseorang yang tidak
@@ -259,6 +259,10 @@ fi
 - Apabila sudah ada maka folder akan dihapus dan dibuat folder baru dengan nama yang sama
 - Apabila belum maka akan dibuat folder baru
 
+- Berikut adalah hasilnya
+
+![image](https://drive.google.com/uc?export=view&id=1JFVrZK3m0-i3EL0nQITue8ey-wxQ1ca1)
+
 #### B. Mencari tahu rata-rata request perjam yang dilakukan penyerang
 
 ```yml
@@ -269,6 +273,10 @@ cat log_website_daffainfo.log | awk -F: 'NR>=2{count[$3]++} END {for (c in count
 - `(NR-1)/res` digunakan untuk melakukan perhitungan rata-rata
 - `> $folder/ratarata.txt` digunakan untuk memasukkan hasil ke dalam file rata-rata.txt 
 
+- Berikut adalah hasil dalam file rata-rata.txt nya
+
+![image](https://drive.google.com/uc?export=view&id=1uZKHix0nnpIhsEIjazqt_HeBQ94ZFnIS)
+
 #### C. Mencari tahu IP yang paling banyak melakukan request dan berapa jumlah request yang dilakukan
 
 ```yml
@@ -278,6 +286,10 @@ cat log_website_daffainfo.log | awk -F: 'NR>=2{print $1}' | cut -d\" -f2 | sort 
 - Melakukan selection dan mencetak hasil dengan `awk 'NR==1 {printf "IP yang paling banyak mengakses server adalah: %s sebanyak %s request\n\n", $2, $1}'`
 - Memasukkan hasil ke dalam file result.txt
 
+- Berikut adalah hasil dalam file result.txt nya
+
+![image](https://drive.google.com/uc?export=view&id=1pXXKUhdGIMMrX7NgF6Eq9wBIhm7jwM_p)
+
 #### D. Mencari tahu seberapa banyak request yang menggunakan user-agent "curl"
 
 ```yml
@@ -285,6 +297,10 @@ cat log_website_daffainfo.log | awk '/curl/ {++n} END {printf "Ada %d request ya
 ```
 - Menghitung seberapa banyak "curl" muncul dalam log dengan `awk '/curl/ {++n} `
 - Mencetak dan menambahkan hasil ke dalam file result.txt `END {printf "Ada %d request yang menggunakan curl sebagai user-agent\n\n", n}' >> $folder/result.txt`
+
+- Berikut adalah hasil dalam file result.txt nya
+
+![image](https://drive.google.com/uc?export=view&id=13HfBRB2GscoLKfNl8JbHZ7oVZ1Mxp8Hx)
 
 #### E. Mencari tahu IP address yang melakukan request pada tanggal 22 dan pada jam 02
 
@@ -295,13 +311,17 @@ cat log_website_daffainfo.log | awk -F: '{if($2 ~ /22\// && $3 ~ /02/) {print $1
 - Mencetak IP address unique (tidak ada yang sama) yang sesuai dengan kondisi diatas secara berurutan `{print $1}}' | sort | uniq | cut -d\" -f2`
 - Mencetak dan menambahkan hasil ke dalam file result.txt
 
+- Berikut adalah hasil dalam file result.txt nya
+
+![image](https://drive.google.com/uc?export=view&id=1pwboO_Amn1PkXUq1k-Qj9ZH7ummlz841)
+
 ## Nomor 3
-### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal3)
+### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal3)
 ### Deskripsi soal:
 
 Buatlah program monitoring resource pada komputer kalian. Cukup monitoring ram dan monitoring size suatu directory. Untuk ram gunakan command `free -m`. Untuk disk gunakan command `du -sh <target_path>`. Catat semua metrics yang didapatkan dari hasil `free -m`. Untuk hasil `du -sh <target_path>` catat size dari path directory tersebut. Untuk target_path yang akan dimonitor adalah /home/{user}/.
 
-### A 
+### 3.a 
 
 Di poin ini, kami diminta untuk membuat sebuah log file dengan format metrics_{YmdHms}.log. Berikut syntax yang digunakan: 
 
@@ -323,6 +343,107 @@ Lalu untuk program monitoring resourcenya:
     echo "$MEMORY,$SWAP,$STORAGE" >> $Output
 
 Dimana echo untuk print out keterangan-keterangannya. Lalu di dalam MEMORY, SWAP, dan STORAGE menggunakan metode awk untuk mendapatkan data dari beberapa variabel di memory dan storage (command free untuk melihat isi ram dan du -sh untuk melihat isi storage.) dan echo terakhir untuk print hasil dari scan awk tersebut. Jangan lupa untuk mengganti /home/{user}/ menjadi user sendiri.
+
+### 3.b
+
+Pada soal bagian ini kita diminta untuk membuat `minute_log.sh` berjalan secara otomatis setiap menitnya. Yang kita perlu lakukan adalah membuat cron job untuk menjalakan file tersebut. Dengan menjalankan `crontab -e` di terminal lalu memasukan code cronjobnya, yaitu:
+
+    * * * * * /home/{user}/minute_log.sh
+
+Dengan menggunakan syntax, `minute_log.sh` akan berjalan secara sendirinya setiap menitnya.
+
+### 3.c
+
+Pada soal bagian ini kita diminta untuk mencari hasil minimum, maksimum, dan rata-rata dari tiap log yang berjalan dalam kurun waktu 1 jam.
+
+    max_mem_total=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $1}' | sort | tail -1)
+    min_mem_total=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $1}' | sort | head -1)
+    avg_mem_total=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $1; count++ } 
+    END { print total/count }')
+    avg_mem_total=${avg_mem_total/,/.}
+
+    max_mem_used=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $2}' | sort | tail -1)
+    min_mem_used=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $2}' | sort | head -1)
+    avg_mem_used=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $2; count++ } 
+    END { print total/count }')
+    avg_mem_used=${avg_mem_used/,/.}
+
+    max_mem_free=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $3}' | sort | tail -1)
+    min_mem_free=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $3}' | sort | head -1)
+    avg_mem_free=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $3; count++ } 
+    END { print total/count }')
+    avg_mem_free=${avg_mem_free/,/.}
+
+    max_mem_shared=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $4}' | sort | tail -1)
+    min_mem_shared=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $4}' | sort | head -1)
+    avg_mem_shared=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $4; count++ } 
+    END { print total/count }')
+    avg_mem_shared=${avg_mem_shared/,/.}
+
+    max_mem_buff=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $5}' | sort | tail -1)
+    min_mem_buff=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $5}' | sort | head -1)
+    avg_mem_buff=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $5; count++ } 
+    END { print total/count }')
+    avg_mem_buff=${avg_mem_buff/,/.}
+
+    max_mem_avail=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $6}' | sort | tail -1)
+    min_mem_avail=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $6}' | sort | head -1)
+    avg_mem_avail=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $6; count++ } 
+    END { print total/count }')
+    avg_mem_avail=${avg_mem_avail/,/.}
+
+    max_swap_total=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $7}' | sort | tail -1)
+    min_swap_total=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $7}' | sort | head -1)
+    avg_swap_total=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $7; count++ } 
+    END { print total/count }')
+    avg_swap_total=${avg_swap_total/,/.}
+
+    max_swap_used=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $8}' | sort | tail -1)
+    min_swap_used=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $8}' | sort | head -1)
+    avg_swap_used=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $8; count++ } 
+    END { print total/count }')
+    avg_swap_used=${avg_swap_used/,/.}
+
+    max_swap_free=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $9}' | sort | tail -1)
+    min_swap_free=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $9}' | sort | head -1)
+    avg_swap_free=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $9; count++ } 
+    END { print total/count }')
+    avg_swap_free=${avg_swap_free/,/.}
+
+Bagian tersebut berfungsi sebagai untuk mencari nilai minimum, maksimum, dan rata-rata metrics dari setiap lognya.
+
+    max_mem_total=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{print $1}' | sort | tail -1)
+
+Bagian diatas berfungsi untuk mencari nilai max pada `mem_total`. Fungsi `cat` berguna untuk mencari baris yang mengandung kata    `/home/`. Setelah mendapatkan baris yang mengandung kata tersebut, maka dilanjutkan menggunakan `awk` dengan `-F","` yang berfungsi mengubah separator menjadi `,`.
+
+Pada line tersebut kita meng-print kolom pertama yaitu mem_total. Data mem_total dari semua file akan disort dan hasil dari command sort ini akan di ascending, dengan begitu untuk mengambil nilai `max` digunakan tail -1 dan untuk mengambil nilai `min` menggunakan cara yang sama, tetapi mengubah tail menjadi head agar didapatkan nilai terkecil.
+
+    avg_mem_total=$(cat /home/ghani/Downloads/log/metrics_$OUTPUT*.log | grep /home/ | awk -F "," '{ total += $1; count++ } 
+    END { print total/count }')
+
+Dan pada bagian ini, `awk` pada avg melakukan command yaitu penambahan nilai variabel total terhadap nilai nilai mem_total dengan nilai total itu sendiri. Variabel `count` menghitung ada berapa banyak data yang ada. Setelah command selesai dijalankan sampai semua waktu jam yang sama sudah habis, awk akan meng-print total/count rumus rata-rata.
+
+Untuk menjalankan `aggregate_minutes_to_hourly_log.sh` setiap jam, dapat menggunakn cronjob seperti soal bagian b. Syntax crontab sebagai berikut:
+
+    59 * * * * /home/{user}/aggregate_minutes_to_hourly_log.sh
+
+Dengan menggunakan syntax tersebut pada crontab akan menjalankan `aggregate_minutes_to_hourly_log.sh` setiap jamnya.
+
+### 3.d
+
+Bagian soal ini kita diminta untuk mengubah akses izin file log menjadi hanya bisa dibaca oleh user pemilik file saja. Hal ini dapat dilakukan dengan menambahkan command `chmod` pada script `minute_log.sh` dan `aggregate_minutes_to_hourly_log.sh`.
+
+
+
+### Kendala
+#### Soal 1
+
+#### Soal 2
+- Belum terbiasa dengan syntax shell sehingga memerlukan waktu untuk belajar kembali
+- Tidak terbiasa dengan penggunaan gitlab untuk upload jawaban
+- Pada nomor 2b mengalami kebingungan dalam melakukan perhitungan
+
+#### Soal 3
 
 ## Anggota Kelompok
 | Nama                      | NRP      |
