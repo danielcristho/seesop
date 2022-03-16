@@ -21,7 +21,7 @@ int main() {
     } else {
         //parent
     while ((wait(&status)) > 0);
-    char *argv[] = {"mkdir", "-p", "/home/daniel1/modul2/air/air", NULL};
+    char *argv[] = {"mkdir", "-p", "/home/daniel1/modul2/air", NULL};
     execv("/bin/mkdir", argv);
     }
 
