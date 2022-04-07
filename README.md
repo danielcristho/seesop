@@ -1,4 +1,5 @@
-## Anggota Kelompok
+## Repo Praktikum MK SISOP
+### Anggota Kelompok
 
 | Nama                      | NRP      |
 |---------------------------|----------|

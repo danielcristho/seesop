@@ -106,7 +106,8 @@ void *conn_handler(void *socket_desc) {
             valread = read(sock, password, 1024);
             if (valread < 1) return 0;
 
-            fprintf()
+            fprintf(fp, "%s:%s\n", username, password);
+            fclose(fp);
         }
     }
 }
