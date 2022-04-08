@@ -109,5 +109,75 @@ void *conn_handler(void *socket_desc) {
             fprintf(fp, "%s:%s\n", username, password);
             fclose(fp);
         }
+        else if (!(strcmp(choice, "2"))) {
+            char* aut = "0";
+            FILE* fp = fopen("users.txt", "r");
+            while (aut == "0") {
+                bzero(menu, 1024);
+                sprintf(menu, "Username : \e[s\n\e[u");
+                int ler = write(sock, menu, 1024);
+                bzero(menu, 1024);
+                valread = read(sock, username, 1024);
+                if (valread < 1) return 0;
+
+                sprintf(menu, "Password : \e\[s\n\e[u");
+                write(sock, menu, 1024);
+                bzero(menu, 1024);
+                valread = read(sock, password, 1024);
+
+                while (fgets(buffer, 1024, fp) != NULL && aut == "0") {
+                    char f_username[1024], f_password[1024];
+                    char *token = strtok(buffer, ":");
+                    strcpy(f_username, token);
+                    token = strtok(NULL, "\n");
+                    strcpy(f_password, token);
+
+                    if (strcmp(username, f_username) == 0 && strcmp(password, f_password)==0) {
+                        aut = "1";
+                        write(sock, aut,1024);
+                    }
+                }
+            }
+            while (aut == "1") {
+            bzero(menu, 1024);
+            sprintf(menu, "LOGIN MENU\nadd\nsee\nsubmit\nCHOICE  :   \e[s\n\e[u");
+            write(sock, menu, 1024);
+            valread = read(sock, choice, 1024);
+            if (valread < 1) return 0;
+
+            if (!strcmp(choice, "add")) {
+                FILE* fp_1 = fopen("problem.tsv", "a");
+                char author[1024] = {0};
+                char title[1024] = {0};
+                char filepath_desc[1024] = {0};
+                char filepath_int[1024] = {0};
+                char filepath_out[1024] = {0};
+
+                sprintf(author, "Author : \e[s\n\e[u");
+                write(sock, author, 1024);
+                bzero(author, 1024);
+                valread = read(sock, author, 1024);
+                if (valread < 1) return 0;
+
+                sprintf(title, "Problems    : \e[s\n\e[u");
+                write(sock, title, 1024);
+                bzero(title, 1024);
+                valread = read(sock, title, 1024);
+                if (valread < 1) return 0;
+                
+                //transfer file
+                sprintf(filepath_desc, "Filepath description    : \e[s\n\e[u");
+                write(sock, filepath_desc,1024);
+                bzero(filepath_desc, 1024);
+                valread = read(sock, filepath_desc, 1024);
+                if (valread < 1) return 0;
+                mkdir("FILES", 0777);
+                char path[1024];
+                sprintf(path, "../Client/");
+                FILE* file_create = fopen(path, "w");
+
+                }
+            }
+        }
     }
 }
