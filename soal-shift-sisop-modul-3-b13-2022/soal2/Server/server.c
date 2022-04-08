@@ -120,7 +120,7 @@ void *conn_handler(void *socket_desc) {
                 valread = read(sock, username, 1024);
                 if (valread < 1) return 0;
 
-                sprintf(menu, "Password : \e\[s\n\e[u");
+                sprintf(menu, "Password : \e[s\n\e[u");
                 write(sock, menu, 1024);
                 bzero(menu, 1024);
                 valread = read(sock, password, 1024);
