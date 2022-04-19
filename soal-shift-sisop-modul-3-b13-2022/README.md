@@ -42,114 +42,134 @@ void Execute(char *argv[], char command[]) {
 - Parent Process menunggu hingga child process selesai melakukan tugasnya.
 
 #### CheckThreadError(int iret)
+
 ```yml
 void CheckThreadError(int iret) {
-	if(iret) {
-        	fprintf(stderr,"Error - pthread_create() return code: %d\n",iret);
-        	exit(EXIT_FAILURE);
-    	}
+    if(iret) {
+        fprintf(stderr,"Error - pthread_create() return code: %d\n",iret);
+        exit(EXIT_FAILURE);
+    }
 }
 ```
+
 - Fungsi ini memeriksa apakah thread yang telah dibuat error atau tidak
 
 #### ExtractFiles(void *arg)
+
 ```yml
 void *ExtractFiles(void *arg) {
-	char **argv_f = (char**) arg;
-  	char *argv[] = {"unzip", argv_f[0], "-d", argv_f[1], NULL};
-  	Execute(argv, "/usr/bin/unzip");  	
+    char **argv_f = (char**) arg;
+    char *argv[] = {"unzip", argv_f[0], "-d", argv_f[1], NULL};
+    Execute(argv, "/usr/bin/unzip");
 }
 ```
+
 - Mengubah variabel arg yang bertipe pointer void menjadi double pointer char
 - Parameter argv_f[0] adalah nama filenya yang ingin diekstrak
 - Parameter argv_f[1] adalah output filenya.
 - Jalankan fungsi Execute() dengan parameter argv dan "/usr/bin/unzip".
 
 #### ChangeWorkingDirectory(const char *dir)
+
 ```yml
 void ChangeWorkingDirectory(const char *dir) {
-	if ((chdir(dir)) < 0) {
-		exit(EXIT_FAILURE);
-	}
+    if ((chdir(dir)) < 0) {
+        exit(EXIT_FAILURE);
+    }
 }
 ```
+
 - Merubah working directory menjadi parameter dir.
 - Jika fungsi gagal, maka exit.
 
 #### ZipFiles(char *pass, char *source)
 ```yml
+
 void ZipFiles(char *pass, char *source) {
-	ChangeWorkingDirectory(source);
-	char destination[30] = "../";
-	strcat(destination, source);
-	char *argv[] = {"zip", "-r", "-P", pass, destination, ".", NULL};
-	Execute(argv, "/usr/bin/zip");  
-	ChangeWorkingDirectory("../");
+    ChangeWorkingDirectory(source);
+    char destination[30] = "../";
+    strcat(destination, source);
+    char *argv[] = {"zip", "-r", "-P", pass, destination, ".", NULL};
+    Execute(argv, "/usr/bin/zip");  
+    ChangeWorkingDirectory("../");
 }
 ```
+
 - Ubah working directory ke dalam folder yang ingin dizip
 - Dapatkan destinationnya dengan menggabungkan "../" dan source
 - Jalankan fungsi Execute() dengan parameter argv dan "/usr/bin/zip".
 - Ubah working directory kembali ke parent directory.
 
 #### CreateFolder(char folder_name[])
+
 ```yml
-void CreateFolder(char folder_name[]) {
-	char *argv[] = {"mkdir", "-p", folder_name, NULL};
-	Execute(argv, "/usr/bin/mkdir");
-}
+    void CreateFolder(char folder_name[]) {
+    char *argv[] = {"mkdir", "-p", folder_name, NULL};
+    Execute(argv, "/usr/bin/mkdir");
+    }
 ```
+
 - Parameter "-p" agar fungsi agar mengabaikan jika telah ada folder dengan nama yang sama.
 - Parameter folder_name adalah nama folder yang ingin dibuat.
 - Jalankan fungsi Execute() dengan parameter argv dan "/usr/bin/mkdir".
 
 #### RemoveFile(char file[])
 ```yml
-void RemoveFile(char file[]) {
-    	char *argv[] = {"remove", "-r", file, NULL};
-    	Execute(argv, "/usr/bin/rm");
-}
+
+    void RemoveFile(char file[]) {
+        char *argv[] = {"remove", "-r", file, NULL};
+        Execute(argv, "/usr/bin/rm");
+    }
 ```
+
 - Parameter "-r" memperbolehkan menghapus directory dan file adalah nama file yang ingin dihapus.
 - Jalankan fungsi Execute() dengan parameter argv dan "/usr/bin/rm".
 
 #### MoveFile(char source[], char destination[])
 ```yml
-void MoveFile(char source[], char destination[]) {
-  	char *argv[] = {"cp", source, destination, NULL};
-  	Execute(argv, "/bin/cp"); 
-  	
-  	RemoveFile(source);
-}
+
+    void MoveFile(char source[], char destination[]) {
+    char *argv[] = {"cp", source, destination, NULL};
+    Execute(argv, "/bin/cp"); 
+
+    RemoveFile(source);
+    }
 ```
+
 - Parameter source adalah file yang ingin dipindahkan dan destination adalah tujuannya.
 - Jalankan fungsi Execute() dengan parameter argv dan "/bin/cp".
 - Hapus source file
 
 #### DownloadFile(char *url, char *output)
+
 ```yml
-void DownloadFile(char *url, char *output) {
-	char *argv[] = {"wget", url, "-O", output};
-	Execute(argv, "/usr/bin/wget");  
-}
+
+    void DownloadFile(char *url, char *output) {
+    char *argv[] = {"wget", url, "-O", output};
+    Execute(argv, "/usr/bin/wget");  
+    }
 ```
+
 - Parameter url adalah url file yang ingin didownload
 - Jalankan fungsi Execute() dengan parameter argv dan "/usr/bin/wget".
 
 #### CreateTextFile(void *arg)
-```yml
-void *CreateTextFile(void *arg) {
-	char **argv = (char**) arg;
-	char *name = argv[0];
-	char *contents = argv[1];
 
-	FILE *file = fopen(name, "w");
-	
-	fprintf(file, "%s", contents);
-	
-	fclose(file);
+```yml
+    void *CreateTextFile(void *arg) {
+    char **argv = (char**) arg;
+    char *name = argv[0];
+    char *contents = argv[1];
+
+    FILE *file = fopen(name, "w");
+
+    fprintf(file, "%s", contents);
+
+    fclose(file);
+
 }
 ```
+
 - Mengubah variabel arg yang bertipe pointer void menjadi double pointer char
 - Parameter argv[0] adalah nama
 - Parameter argv[1] adalah konten file
@@ -157,192 +177,207 @@ void *CreateTextFile(void *arg) {
 
 ### Penjelasan Jawaban
 #### A. Download music.zip dan quote.zip lalu unzip menggunakan thread
+
 ```yml
-int main() {
-	DownloadFile(url_music, "music.zip");
-	DownloadFile(url_quote, "quote.zip");
-	ProcessUnzipFiles();
+    int main() {
+    DownloadFile(url_music, "music.zip");
+    DownloadFile(url_quote, "quote.zip");
+    ProcessUnzipFiles();
 ```
+
 - Download file music.zip dan quote.zip menggunakan fungsi DownloadFile()
 - Lalu unzip kedua file tersebut dengan fungsi ProcessUnzipFiles()
 
 ```yml
 void ProcessUnzipFiles() {
-	pthread_t thread1, thread2;
-    	int  iret1, iret2;
-    	
-    	char *music_argv_f[] = {"music.zip", "./music"};
-    	iret1 = pthread_create( &thread1, NULL, ExtractFiles, (void*) music_argv_f); 
-    	CheckThreadError(iret1);
-    	
-	char *quote_argv_f[] = {"quote.zip", "./quote"};
-    	iret2 = pthread_create( &thread2, NULL, ExtractFiles, (void*) quote_argv_f);
-    	CheckThreadError(iret2);
-    	
-    	pthread_join(thread1, NULL);
-    	pthread_join(thread2, NULL); 
+pthread_t thread1, thread2;
+    int  iret1, iret2;
+    
+    char *music_argv_f[] = {"music.zip", "./music"};
+    iret1 = pthread_create( &thread1, NULL, ExtractFiles, (void*) music_argv_f); 
+    CheckThreadError(iret1);
+    
+char *quote_argv_f[] = {"quote.zip", "./quote"};
+    iret2 = pthread_create( &thread2, NULL, ExtractFiles, (void*) quote_argv_f);
+    CheckThreadError(iret2);
+    
+    pthread_join(thread1, NULL);
+    pthread_join(thread2, NULL); 
 }
 ```
+
 - Buat dua thread yang masing - masing menjalankan fungsi ExtractFiles() untuk music.zip dan quote.zip
 - Tunggu kedua thread tersebut sampai selesai dengan pthread_join()
 
 #### B. Decode semua file text yang ada di masing masing folder dengan base 64
+
 ```yml
     ProcessDecode();
 ```
+
 - Kembali ke main dan jalankan ProcessDecode()
 
 ```yml
 void ProcessDecode() {
-	pthread_t thread1, thread2;
-    	int  iret1, iret2;
-    	
-    	iret1 = pthread_create(&thread1, NULL, ScanDirectory, (void*) "music"); 
-    	CheckThreadError(iret1);
-    	
-    	iret2 = pthread_create(&thread2, NULL, ScanDirectory, (void*) "quote"); 
-    	CheckThreadError(iret2);
-    	
-    	pthread_join(thread1, NULL);
-    	pthread_join(thread2, NULL);
+pthread_t thread1, thread2;
+    int  iret1, iret2;
+    
+    iret1 = pthread_create(&thread1, NULL, ScanDirectory, (void*) "music"); 
+    CheckThreadError(iret1);
+    
+    iret2 = pthread_create(&thread2, NULL, ScanDirectory, (void*) "quote"); 
+    CheckThreadError(iret2);
+    
+    pthread_join(thread1, NULL);
+    pthread_join(thread2, NULL);
 }
 ```
+
 - Buat dua thread yang masing - masing menjalankan fungsi ScanDirectory() untuk folder music dan quote
 - Tunggu kedua thread tersebut sampai selesai dengan pthread_join()
 
 ```yml
 void *ScanDirectory(void *directory) {
-	char *dir_name = (char*) directory;
-	
-	char file_output[50];
-	
-	struct dirent *dp;
-	DIR *dir = opendir(dir_name);
-	
-	if (!dir)
-		exit(EXIT_FAILURE);
+char *dir_name = (char*) directory;
 
-    	while ((dp = readdir(dir)) != NULL) {
-       	if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0) 	{
-       		char file_name[50];
-       		strcpy(file_name, dir_name);
-       		strcat(file_name, "/");
-       		strcat(file_name, dp->d_name);
-       		
-       		strcpy(file_output, dir_name);
-       		strcat(file_output, ".txt");
+char file_output[50];
 
-        		DecodeBase64(file_name, file_output);	
-        	}
-    	}
+struct dirent *dp;
+DIR *dir = opendir(dir_name);
+
+if (!dir)
+    exit(EXIT_FAILURE);
+
+    while ((dp = readdir(dir)) != NULL) {
+    if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0) 	{
+        char file_name[50];
+        strcpy(file_name, dir_name);
+        strcat(file_name, "/");
+        strcat(file_name, dp->d_name);
+        
+        strcpy(file_output, dir_name);
+        strcat(file_output, ".txt");
+
+            DecodeBase64(file_name, file_output);	
+        }
+    }
 ```
+
 - Buka directory dengan opendir
 - Baca satu persatu file di dalam directory dan dapatkan nama filenya dan nama text outputnya
 - Jalankan fungsi DecodeBase64() dengan parameter nama file dan nama text output
 
 ```yml
 void DecodeBase64(char *name, char *output) {
-	int fd[2];
-	char decoded_text[50];
-	int status;
-	
-	FILE *file = fopen(output, "a");
+int fd[2];
+char decoded_text[50];
+int status;
 
-	if (pipe(fd)==-1) 
-	{ 
-		fprintf(stderr, "Pipe Failed" ); 
-		exit(EXIT_FAILURE); 
-	} 
-	
-	pid_t child_id = CreateChildProcess();
-	
-	if (child_id == 0) {
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-    		close(fd[1]);
-		execl("/usr/bin/base64", "base64", "-d", name, NULL);
-	}
+FILE *file = fopen(output, "a");
 
-	close(fd[1]);
-    	FILE *cmd_output = fdopen(fd[0], "r");
-    	if(fgets(decoded_text, sizeof decoded_text, cmd_output)) {
-    		fprintf(file, "%s\n", decoded_text);
-    	}
-    	else {
-    		fprintf(file, "HEHEHEHEHE\n");
-    	}
+if (pipe(fd)==-1) 
+{ 
+    fprintf(stderr, "Pipe Failed" ); 
+    exit(EXIT_FAILURE); 
+} 
 
-	while ((wait(&status)) > 0);
-	
-	fclose(file);
+pid_t child_id = CreateChildProcess();
+
+if (child_id == 0) {
+    dup2(fd[1], STDOUT_FILENO);
+    close(fd[0]);
+        close(fd[1]);
+    execl("/usr/bin/base64", "base64", "-d", name, NULL);
+}
+
+close(fd[1]);
+    FILE *cmd_output = fdopen(fd[0], "r");
+    if(fgets(decoded_text, sizeof decoded_text, cmd_output)) {
+        fprintf(file, "%s\n", decoded_text);
+    }
+    else {
+        fprintf(file, "HEHEHEHEHE\n");
+    }
+
+while ((wait(&status)) > 0);
+
+fclose(file);
 }
 ```
+
 - Buat pipe lalu buat child process
 - Jika yang sedang menjalankan perintah adalah child, maka duplicate standart output ke file descriptor bagian write, lalu execute base64 dengan parameter nama filenya
 - Jika yang menjalankan parent process, maka buka file descriptor dan dapatkan copy isinya ke dalam variabel decoded_text
 - Jika berhasil, print teks yang telah didecode ke file text nya. 
 
 #### C. Pindahkan file text yang telah dibuat ke folder hasil
+
 ```yml
-    CreateFolder("hasil");
-    MoveFile(file_output, "hasil");
-    	
-   	closedir(dir);
+CreateFolder("hasil");
+MoveFile(file_output, "hasil");
+closedir(dir);
 }
 
 ```
+
 - Buat folder hasil lalu pindahkan file output ke dalam folder hasil
 
 #### D. Folder hasil dizip dengan password 'mihinomenest[Nama user]'
+
 ```yml
     ProcessZipFiles();
 ```
+
 - Kembali ke fungsi main dan jalankan fungsi ProcessZipFiles()
 
 ```yml
 void ProcessZipFiles() {
-	char *usr;
-	usr=(char *)malloc(10*sizeof(char));
-	usr=getlogin();
+char *usr;
+usr=(char *)malloc(10*sizeof(char));
+usr=getlogin();
 
-	char pass[30] = "mihinomenest";
-	strcat(pass, usr);
-	
-	ZipFiles(pass, "hasil");
-	
-	RemoveFile("hasil");
+char pass[30] = "mihinomenest";
+strcat(pass, usr);
+
+ZipFiles(pass, "hasil");
+
+RemoveFile("hasil");
 }
 ```
+
 - Dapatkan nama user dengan getlogin()
 - Gabungkan "mihinomenest" dengan nama user yang telah didapat tadi
 - Lalu jalankan fungsi ZipFiles() dengan parameter password pass dan nama folder "hasil"
 - Hapus folder "hasil"
 
-#### E. Unzip hasil.zip lalu buat file no.txt dengan isi 'No' kemudian zip kembali
+#### E. Unzip hasil.zip lalu buat file no.txt dengan isi 'No' kemudian zip 
+
 ```yml
     ProcessAddTextFile();
 ```
+
 - Kembali ke fungsi main dan jalankan fungsi ProcessAddTextFile
 
 ```yml
-void ProcessAddTextFile() {
+    void ProcessAddTextFile() {
     pthread_t thread1, thread2;
     int  iret1, iret2;
-    	
+        
     CreateFolder("hasil");
-    	
+        
     char *hasil_argv_f[] = {"hasil.zip", "./hasil"};
     iret1 = pthread_create( &thread1, NULL, ExtractFiles, (void*) hasil_argv_f); 
     CheckThreadError(iret1);
-    	
-	char *no_argv_f[] = {"hasil/no.txt", "No"};
+        
+    char *no_argv_f[] = {"hasil/no.txt", "No"};
     iret2 = pthread_create( &thread2, NULL, CreateTextFile, (void*) no_argv_f);
     CheckThreadError(iret2);
-    	
+        
     pthread_join(thread1, NULL);
     pthread_join(thread2, NULL); 
-}
+    }
 ```
+
 - Buat folder "hasil"
 - Buat dua thread yang masing masing mengekstrak hasil.zip dan membuat no.txt dengan isi 'No'
 - Tunggu hinga kedua thread tersebut selesai dijalankan dengan pthread_join
@@ -351,6 +386,7 @@ void ProcessAddTextFile() {
     ProcessZipFiles();
 }
 ```
+
 - Kembali ke fungsi main dan jalankan fungsi ProcessZipFiles() lagi.
 
 ## Nomor 2
