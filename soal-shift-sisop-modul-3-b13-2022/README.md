@@ -1,5 +1,5 @@
 ## Nomor 1
-### source code: [click here!](https://gitlab.com/sisop-b13/soal-shift-sisop-modul-3-b13-2022/-/blob/main/soal1)
+
 ### Deskripsi soal:
 Novak adalah seorang mahasiswa biasa yang terlalu sering berselancar di internet. Pada suatu saat, Ia menemukan sebuah informasi bahwa ada suatu situs yang tidak memiliki pengguna. Ia mendownload berbagai informasi yang ada dari situs tersebut dan menemukan sebuah file dengan tulisan yang tidak jelas. Setelah diperhatikan lagi, kode tersebut berformat base64. Ia lalu meminta kepada anda untuk membuat program untuk memecahkan kode-kode di dalam file yang Ia simpan di drive dengan cara decoding dengan base 64. Agar lebih cepat, Ia sarankan untuk menggunakan thread.
 
@@ -354,7 +354,6 @@ void ProcessAddTextFile() {
 - Kembali ke fungsi main dan jalankan fungsi ProcessZipFiles() lagi.
 
 ## Nomor 2
-### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-3-b13-2022/-/tree/main/soal2)
 
 ### Deskripsi Soal
 Bluemary adalah seorang Top Global 1 di salah satu platform online judge. Suatu hari Ia ingin membuat online judge nya sendiri, namun dikarenakan Ia sibuk untuk mempertahankan top global nya, maka Ia meminta kamu untuk membantunya dalam membuat online judge sederhana. Online judge sederhana akan dibuat dengan sistem client-server dengan beberapa kriteria sebagai berikut:
