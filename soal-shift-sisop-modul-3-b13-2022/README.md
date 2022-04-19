@@ -1,42 +1,49 @@
 ## Nomor 1
 
+
 ### Deskripsi soal:
+
 Novak adalah seorang mahasiswa biasa yang terlalu sering berselancar di internet. Pada suatu saat, Ia menemukan sebuah informasi bahwa ada suatu situs yang tidak memiliki pengguna. Ia mendownload berbagai informasi yang ada dari situs tersebut dan menemukan sebuah file dengan tulisan yang tidak jelas. Setelah diperhatikan lagi, kode tersebut berformat base64. Ia lalu meminta kepada anda untuk membuat program untuk memecahkan kode-kode di dalam file yang Ia simpan di drive dengan cara decoding dengan base 64. Agar lebih cepat, Ia sarankan untuk menggunakan thread.
 
-### Penjelasan Fungsi Utama
-#### CreateChildProcess()
-```yml
-pid_t CreateChildProcess() {
- 	pid_t child_id = fork();
+### Penjelasan Fungsi 
 
-  	if (child_id < 0) {
-    		exit(EXIT_FAILURE); 
-  	}
-  	
+#### CreateChildProcess()
+
+```yml
+    pid_t CreateChildProcess() {
+    pid_t child_id = fork();
+
+    if (child_id < 0) {
+        exit(EXIT_FAILURE); 
+    }
+
     return child_id;
-}
+    }
 ```
+
 - Membuat proses baru dengan fungsi fork() dan masukkan returnnya ke dalam child_id.
 - Cek jika child_id kurang dari 0 artinya pembuatan proses baru gagal.
 - Jika berhasil, return child_id.
 
 #### Execute(char *argv[], char command[])
+
 ```yml
-void Execute(char *argv[], char command[]) {
-	int status;
+    void Execute(char *argv[], char command[]) {
+    int status;
 
-	int fd[2];
-	
-	char output[50];
+    int fd[2];
 
-	pid_t child_id = CreateChildProcess();
-	
-	if (child_id == 0) {
-		execv(command, argv);
-	}
-	while ((wait(&status)) > 0);
-}
+    char output[50];
+
+    pid_t child_id = CreateChildProcess();
+
+    if (child_id == 0) {
+        execv(command, argv);
+    }
+    while ((wait(&status)) > 0);
+    }
 ```
+
 - Membuat proses child baru dengan CreateChildProcess().
 - Child tersebut kemudian execute perintah yang dimasukkan ke dalam variabel command dengan parameter argv.
 - Parent Process menunggu hingga child process selesai melakukan tugasnya.
@@ -176,7 +183,9 @@ void ZipFiles(char *pass, char *source) {
 - Print konten kedalam file
 
 ### Penjelasan Jawaban
+
 #### A. Download music.zip dan quote.zip lalu unzip menggunakan thread
+
 
 ```yml
     int main() {
