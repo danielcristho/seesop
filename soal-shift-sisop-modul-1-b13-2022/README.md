@@ -1,6 +1,6 @@
 # soal-shift-sisop-modul-1-B13-2022
 ## Nomor 1
-### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal1)
+### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal-shift-sisop-modul-1-b13-2022/soal1)
 
 ### Deskripsi soal:
 Pada suatu hari, Han dan teman-temannya diberikan tugas untuk mencari foto. Namun,
