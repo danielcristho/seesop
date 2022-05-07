@@ -1,6 +1,6 @@
 # soal-shift-sisop-modul-1-B13-2022
 ## Nomor 1
-### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal1)
+### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal-shift-sisop-modul-1-b13-2022/soal1)
 
 ### Deskripsi soal:
 Pada suatu hari, Han dan teman-temannya diberikan tugas untuk mencari foto. Namun,
@@ -225,7 +225,7 @@ rm -r $nama_folder
 
 
 ## Nomor 2
-### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal2)
+### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal-shift-sisop-modul-1-b13-2022/soal2)
 ### Deskripsi soal:
 
 Pada tanggal 22 Januari 2022, website https://daffa.info di hack oleh seseorang yang tidak
@@ -316,7 +316,7 @@ cat log_website_daffainfo.log | awk -F: '{if($2 ~ /22\// && $3 ~ /02/) {print $1
 ![image](https://drive.google.com/uc?export=view&id=1pwboO_Amn1PkXUq1k-Qj9ZH7ummlz841)
 
 ## Nomor 3
-### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-1-b13-2022/-/tree/main/soal3)
+### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal-shift-sisop-modul-1-b13-2022/soal3)
 ### Deskripsi soal:
 
 Buatlah program monitoring resource pada komputer kalian. Cukup monitoring ram dan monitoring size suatu directory. Untuk ram gunakan command `free -m`. Untuk disk gunakan command `du -sh <target_path>`. Catat semua metrics yang didapatkan dari hasil `free -m`. Untuk hasil `du -sh <target_path>` catat size dari path directory tersebut. Untuk target_path yang akan dimonitor adalah /home/{user}/.

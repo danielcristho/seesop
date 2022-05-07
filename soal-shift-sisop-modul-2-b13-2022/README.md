@@ -1,12 +1,12 @@
 # soal-shift-sisop-modul-2-B13-2022
 
 ## Nomor 1
-### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-2-b13-2022/-/tree/main/soal1)
+### source code: [click here!](https://github.com/danielcristho/seesop/blob/master/soal-shift-sisop-modul-2-b13-2022/soal1/soal1/soal1.c)
 ### Deskripsi soal:
 Mas Refadi adalah seorang wibu gemink.  Dan jelas game favoritnya adalah bengshin impek. Terlebih pada game tersebut ada sistem gacha item yang membuat orang-orang selalu ketagihan untuk terus melakukan nya. Tidak terkecuali dengan mas Refadi sendiri. Karena rasa penasaran bagaimana sistem gacha bekerja, maka dia ingin membuat sebuah program untuk men-simulasi sistem history gacha item pada game tersebut. Tetapi karena dia lebih suka nge-wibu dibanding ngoding, maka dia meminta bantuanmu untuk membuatkan program nya. Sebagai seorang programmer handal, bantulah mas Refadi untuk memenuhi keinginan nya itu. 
 
 ## Nomor 2
-### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-2-b13-2022/-/tree/main/soal2)
+### source code: [click here!](https://github.com/danielcristho/seesop/blob/master/soal-shift-sisop-modul-2-b13-2022/soal2/soal2.c)
 
 ### Deskripsi soal:
 Japrun bekerja di sebuah perusahaan dibidang review industri perfilman, karena kondisi saat ini sedang pandemi Covid-19, dia mendapatkan sebuah proyek untuk mencari drama korea yang tayang dan sedang ramai di Layanan Streaming Film untuk diberi review. Japrun sudah mendapatkan beberapa foto-foto poster serial dalam bentuk zip untuk diberikan review, tetapi didalam zip tersebut banyak sekali poster drama korea dan dia harus memisahkan poster-poster drama korea tersebut tergantung dengan kategorinya. Japrun merasa kesulitan untuk melakukan pekerjaannya secara manual, kamu sebagai programmer diminta Japrun untuk menyelesaikan pekerjaannya.
@@ -360,7 +360,7 @@ void StoreData(char category[]) {
 - Jalankan deretan perintah tadi hingga setiap folder dalam folder drakor telah dikunjungi.
 
 ## Nomor 3
-### source code: [click here!](https://gitlab.com/hufahamdika/soal-shift-sisop-modul-2-b13-2022/-/blob/main/soal3/soal_3.c)
+### source code: [click here!](https://github.com/danielcristho/seesop/tree/master/soal-shift-sisop-modul-2-b13-2022/soal3)
 
 ### Deskripsi Soal
 
